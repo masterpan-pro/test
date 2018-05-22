@@ -4,6 +4,7 @@ import com.demo.dao.PersonMapper;
 import com.demo.entity.Person;
 import com.demo.service.PersonService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -15,6 +16,7 @@ public class PersonServiceImpl implements PersonService {
     private PersonMapper personMapper;
 
     @Override
+    @Transactional("txManager")
     public int insert(Person person) {
         return personMapper.insert(person);
     }

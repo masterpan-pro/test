@@ -63,7 +63,7 @@ public class MybatisConfig {
         TransactionInterceptor interceptor = new TransactionInterceptor();
         interceptor.setTransactionManager(txManager);
         Properties transactionAttributes = new Properties();
-        transactionAttributes.setProperty("save*", "PROPAGATION_REQUIRED");
+        transactionAttributes.setProperty("insert*", "PROPAGATION_REQUIRED");
         transactionAttributes.setProperty("del*", "PROPAGATION_REQUIRED");
         transactionAttributes.setProperty("update*", "PROPAGATION_REQUIRED");
         transactionAttributes.setProperty("get*", "PROPAGATION_REQUIRED,readOnly");
