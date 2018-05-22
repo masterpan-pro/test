@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class UserController {
     public ModelAndView index(ModelAndView modelAndView) {
         modelAndView.setViewName("test");
         List<Person> persons = new ArrayList<>();
-        persons.add(new Person("MasterPan" , 24, "changsha", new Timestamp(System.currentTimeMillis()), "remark"));
+        persons.add(new Person("MasterPan" , 24, "changsha", new Timestamp(System.currentTimeMillis()), "remark", new BigDecimal(180.22)));
         personService.insertList(persons);
         return modelAndView;
     }

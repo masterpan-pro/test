@@ -13,6 +13,8 @@ public class Person {
     private String remark;
     private BigDecimal money;
 
+    public Person(){}
+
     public Person(String name, Integer age, String address, Timestamp birthday, String remark, BigDecimal money) {
         this.name = name;
         this.age = age;
