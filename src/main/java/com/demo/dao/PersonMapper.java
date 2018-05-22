@@ -1,10 +1,10 @@
 package com.demo.dao;
 
+import com.demo.entity.Person;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import com.demo.entity.Person;
 
 @Mapper
 public interface PersonMapper {
@@ -16,12 +16,10 @@ public interface PersonMapper {
 
     int update(@Param("person") Person person);
 
-    Person findById(@Param("id")Long id);
+    Person findById(@Param("id") Long id);
 
     List<Person> find();
 
-    Person findByIdAndNameAndAddress(@Param("id")Long id,@Param("name")String name,@Param("address")String address);
-
-
+    Person findByIdAndNameAndAddress(@Param("id") Long id, @Param("name") String name, @Param("address") String address);
 
 }
