@@ -29,6 +29,11 @@ import java.util.List;
 public class WebConfig extends WebMvcConfigurationSupport {
 
     @Bean
+    public ApplicationStartListener applicationStartListener(){
+        return new ApplicationStartListener();
+    }
+
+    @Bean
     public ServletContextTemplateResolver templateResolver() {
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
         templateResolver.setPrefix("/WEB-INF/views/");
