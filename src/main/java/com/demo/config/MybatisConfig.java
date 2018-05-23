@@ -17,9 +17,9 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@MapperScan("com.demo.dao")
 @PropertySource({"classpath:jdbc.properties"})
 @EnableTransactionManagement
-@MapperScan("com.demo.dao")
 public class MybatisConfig {
 
     @Value("${jdbc.url}")
