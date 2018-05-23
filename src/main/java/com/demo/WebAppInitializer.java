@@ -10,7 +10,8 @@ import javax.servlet.ServletRegistration;
 
 /**
  * 应用启动入口和各类配置
- * https://docs.spring.io/spring/docs/5.0.x/javadoc-api/org/springframework/web/WebApplicationInitializer.html
+ * 参考：
+ *     https://docs.spring.io/spring/docs/5.0.x/javadoc-api/org/springframework/web/WebApplicationInitializer.html
  */
 public class WebAppInitializer implements WebApplicationInitializer {
 

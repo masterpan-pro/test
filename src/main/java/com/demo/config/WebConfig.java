@@ -19,6 +19,8 @@ import java.util.List;
 
 /**
  * 配置类，用于定义DispatcherServlet上下文的bean
+ * 参考：
+ *     https://www.luckyryan.com/2013/02/07/migrate-spring-mvc-servlet-xml-to-java-config/
  */
 @Configuration
 @EnableWebMvc
