@@ -50,7 +50,10 @@ public class MybatisConfig {
         sqlSessionFactoryBean.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/*Mapper.xml"));
-        return sqlSessionFactoryBean.getObject();
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
+        // 开启缓存
+        sqlSessionFactory.getConfiguration().setCacheEnabled(true);
+        return sqlSessionFactory;
     }
 
     @Bean(name = "txManager")
