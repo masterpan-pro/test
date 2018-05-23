@@ -49,7 +49,12 @@ public class PersonController {
             );
         }
         return personService.insertList(personList);
+    }
 
+    @RequestMapping("webjar")
+    public ModelAndView webjar(ModelAndView modelAndView) {
+        modelAndView.setViewName("webjar");
+        return modelAndView;
     }
 
 }
