@@ -54,8 +54,6 @@ public class RedisConfig {
 
     @Bean
     public RedisCacheTransfer redisCacheTransfer(JedisConnectionFactory jedisConnectionFactory) {
-        RedisCacheTransfer redisCacheTransfer = new RedisCacheTransfer();
-        redisCacheTransfer.setJedisConnectionFactory(jedisConnectionFactory);
-        return redisCacheTransfer;
+        return new RedisCacheTransfer(jedisConnectionFactory);
     }
 }

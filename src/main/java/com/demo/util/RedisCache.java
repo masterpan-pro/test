@@ -26,7 +26,7 @@ public class RedisCache implements Cache {
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
+
         RedisConnection connection = null;
         try {
             connection = jedisConnectionFactory.getConnection();
@@ -43,13 +43,13 @@ public class RedisCache implements Cache {
 
     @Override
     public String getId() {
-        // TODO Auto-generated method stub
+
         return this.id;
     }
 
     @Override
     public Object getObject(Object key) {
-        // TODO Auto-generated method stub
+
         Object result = null;
         RedisConnection connection = null;
         try {
@@ -67,13 +67,13 @@ public class RedisCache implements Cache {
 
     @Override
     public ReadWriteLock getReadWriteLock() {
-        // TODO Auto-generated method stub
+
         return this.readWriteLock;
     }
 
     @Override
     public int getSize() {
-        // TODO Auto-generated method stub
+
         int result = 0;
         RedisConnection connection = null;
         try {
@@ -91,7 +91,7 @@ public class RedisCache implements Cache {
 
     @Override
     public void putObject(Object key, Object value) {
-        // TODO Auto-generated method stub
+
         RedisConnection connection = null;
         try {
             connection = jedisConnectionFactory.getConnection();
@@ -107,7 +107,7 @@ public class RedisCache implements Cache {
 
     @Override
     public Object removeObject(Object key) {
-        // TODO Auto-generated method stub
+
         RedisConnection connection = null;
         Object result = null;
         try {
