@@ -20,16 +20,16 @@ import java.util.List;
 /**
  * 配置类，用于定义DispatcherServlet上下文的bean
  * 参考：
- *     https://www.luckyryan.com/2013/02/07/migrate-spring-mvc-servlet-xml-to-java-config/
+ * https://www.luckyryan.com/2013/02/07/migrate-spring-mvc-servlet-xml-to-java-config/
  */
 @Configuration
 @EnableWebMvc
-@Import({MybatisConfig.class})
+@Import({MybatisConfig.class, RedisConfig.class})
 @ComponentScan({"com.demo.controller", "com.demo.service", "com.demo.dao"})
 public class WebConfig extends WebMvcConfigurationSupport {
 
     @Bean
-    public ApplicationStartListener applicationStartListener(){
+    public ApplicationStartListener applicationStartListener() {
         return new ApplicationStartListener();
     }
 

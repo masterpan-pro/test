@@ -3,12 +3,13 @@ package com.demo.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
-public class Person {
+public class Person implements Serializable {
     private Long id;
     private String name;
     private Integer age;
