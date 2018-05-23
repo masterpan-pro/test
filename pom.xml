@@ -137,6 +137,9 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.4.10.v20180503</version>
                 <configuration>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
                     <httpConnector>
                         <port>8088</port>
                     </httpConnector>
