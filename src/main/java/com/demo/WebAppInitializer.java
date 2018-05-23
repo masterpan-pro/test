@@ -1,31 +1,29 @@
 package com.demo;
 
-import com.demo.config.RootConfig;
 import com.demo.config.WebConfig;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration;
 
 /**
  * 应用启动入口和各类配置
+ * https://docs.spring.io/spring/docs/5.0.x/javadoc-api/org/springframework/web/WebApplicationInitializer.html
  */
-@Slf4j
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
-    protected Class<?>[] getRootConfigClasses() {
-        logger.info("------root配置类初始化------");
-        return new Class[]{RootConfig.class};
+    public void onStartup(ServletContext container) {
+        // Create the dispatcher servlet's Spring application context
+        AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
+        dispatcherContext.register(WebConfig.class);
+
+        // Register and map the dispatcher servlet
+        ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
     }
 
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        logger.info("------web配置类初始化------");
-        return new Class[]{WebConfig.class};
-    }
-
-    @Override
-    protected String[] getServletMappings() {
-        logger.info("------映射根路径初始化------");
-        return new String[]{"/"};
-    }
 }

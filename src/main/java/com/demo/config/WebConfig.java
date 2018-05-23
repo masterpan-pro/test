@@ -3,6 +3,7 @@ package com.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -21,7 +22,8 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.demo.controller")
+@Import({MybatisConfig.class})
+@ComponentScan({"com.demo.controller", "com.demo.service", "com.demo.dao"})
 public class WebConfig extends WebMvcConfigurationSupport {
 
     @Bean
