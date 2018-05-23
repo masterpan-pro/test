@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -36,6 +37,19 @@ public class PersonController {
     @RequestMapping("json")
     public List<Person> index() {
         return personService.find();
+    }
+
+    @ResponseBody
+    @RequestMapping("batI")
+    public Integer batchInsert() {
+        List<Person> personList = new ArrayList<>();
+        for (int i = 0; i < 10000; i++) {
+            personList.add(
+                    new Person(null, "admin" + i, 24, "changsha", new Timestamp(System.currentTimeMillis()), "beizhu" + i, new BigDecimal(12000.23))
+            );
+        }
+        return personService.insertList(personList);
+
     }
 
 }

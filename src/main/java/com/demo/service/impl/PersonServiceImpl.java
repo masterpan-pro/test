@@ -27,6 +27,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional("txManager")
     public int insertList(List<Person> persons) {
         return personMapper.insertList(persons);
     }
