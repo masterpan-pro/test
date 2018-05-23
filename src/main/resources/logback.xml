@@ -8,6 +8,6 @@
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
-    <logger name="com.demo.dao" level="DEBUG"/>
+    <logger name="com.demo" level="DEBUG"/>
     <logger name="org.springframework.jdbc.datasource" level="DEBUG"/>
 </configuration>
