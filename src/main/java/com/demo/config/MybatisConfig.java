@@ -4,8 +4,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +22,6 @@ import java.util.Properties;
 @MapperScan("com.demo.dao")
 public class MybatisConfig {
 
-    private final static Logger logger = LoggerFactory.getLogger(MybatisConfig.class);
-
     @Value("${jdbc.url}")
     private String url;
     @Value("${jdbc.username}")
@@ -35,7 +31,6 @@ public class MybatisConfig {
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-        logger.info("初始化数据源");
         HikariDataSource ds = new HikariDataSource();
         ds.setMaximumPoolSize(100);
         ds.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
@@ -51,7 +46,6 @@ public class MybatisConfig {
 
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        logger.info("配置SqlSessionFactory");
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -61,7 +55,6 @@ public class MybatisConfig {
 
     @Bean(name = "txManager")
     public DataSourceTransactionManager txManager(DataSource dataSource) {
-        logger.info("配置声明式事务管理");
         return new DataSourceTransactionManager(dataSource);
     }
 
@@ -70,7 +63,7 @@ public class MybatisConfig {
         TransactionInterceptor interceptor = new TransactionInterceptor();
         interceptor.setTransactionManager(txManager);
         Properties transactionAttributes = new Properties();
-        transactionAttributes.setProperty("save*", "PROPAGATION_REQUIRED");
+        transactionAttributes.setProperty("insert*", "PROPAGATION_REQUIRED");
         transactionAttributes.setProperty("del*", "PROPAGATION_REQUIRED");
         transactionAttributes.setProperty("update*", "PROPAGATION_REQUIRED");
         transactionAttributes.setProperty("get*", "PROPAGATION_REQUIRED,readOnly");

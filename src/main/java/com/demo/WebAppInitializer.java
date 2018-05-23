@@ -2,16 +2,14 @@ package com.demo;
 
 import com.demo.config.RootConfig;
 import com.demo.config.WebConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
  * 应用启动入口和各类配置
  */
+@Slf4j
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-    private final static Logger logger = LoggerFactory.getLogger(WebAppInitializer.class);
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
