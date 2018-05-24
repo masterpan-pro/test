@@ -22,7 +22,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping
+    @RequestMapping("index")
     public ModelAndView index(ModelAndView modelAndView) {
         Person person = new Person(null, "admin", 24, "changsha", new Timestamp(System.currentTimeMillis()), "beizhu", new BigDecimal(12000.23));
         personService.insert(person);

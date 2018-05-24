@@ -11,6 +11,6 @@ public class ApplicationStartListener implements ApplicationListener<ContextRefr
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         Environment env = contextRefreshedEvent.getApplicationContext().getEnvironment();
-        log.info("Startup Success!-->[http://localhost:8088]");
+        log.info("Startup Success!-->[http://localhost:8088/webjar]");
     }
 }
