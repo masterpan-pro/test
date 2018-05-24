@@ -41,4 +41,14 @@ public class PersonServiceImpl implements PersonService {
     public List<Person> find() {
         return personMapper.find();
     }
+
+    @Override
+    public Person findById(Long id) {
+        return personMapper.findById(id);
+    }
+
+    @Override
+    public int deleteAll() {
+        return personMapper.deleteAll();
+    }
 }

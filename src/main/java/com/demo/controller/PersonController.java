@@ -27,7 +27,7 @@ public class PersonController {
         Person person = new Person(null, "admin", 24, "changsha", new Timestamp(System.currentTimeMillis()), "beizhu", new BigDecimal(12000.23));
         personService.insert(person);
         List<Person> persons = personService.find();
-        log.debug("persons:", persons);
+        log.debug("{}", persons);
         modelAndView.setViewName("index");
         modelAndView.addObject("persons", persons);
         return modelAndView;
@@ -53,8 +53,18 @@ public class PersonController {
 
     @RequestMapping("webjar")
     public ModelAndView webjar(ModelAndView modelAndView) {
+        Person person = personService.findById(100052L);
         modelAndView.setViewName("webjar");
+        modelAndView.addObject("person", person);
+        log.debug("{}", person);
         return modelAndView;
+    }
+
+    @ResponseBody
+    @RequestMapping("delete")
+    public List<Person> delete() {
+        personService.deleteAll();
+        return personService.find();
     }
 
 }

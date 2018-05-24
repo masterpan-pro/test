@@ -22,4 +22,6 @@ public interface PersonMapper {
 
     Person findByIdAndNameAndAddress(@Param("id") Long id, @Param("name") String name, @Param("address") String address);
 
+    int deleteAll();
+
 }
