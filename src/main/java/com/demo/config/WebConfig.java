@@ -15,6 +15,7 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,29 +36,19 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public ServletContextTemplateResolver templateResolver() {
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
-        templateResolver.setPrefix("/WEB-INF/views/");
-        templateResolver.setSuffix(".html");
-        templateResolver.setCacheable(false);
-        templateResolver.setCharacterEncoding("UTF-8");
-        templateResolver.setTemplateMode("HTML5");
-        return templateResolver;
-    }
-
-    @Bean
-    public SpringTemplateEngine templateEngine(ServletContextTemplateResolver templateResolver) {
-        SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
-        springTemplateEngine.setTemplateResolver(templateResolver);
-        return springTemplateEngine;
-    }
-
-    @Bean
-    public ThymeleafViewResolver thymeleafViewResolver(SpringTemplateEngine templateEngine) {
-        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
-        thymeleafViewResolver.setTemplateEngine(templateEngine);
-        thymeleafViewResolver.setCharacterEncoding("UTF-8");
-        return thymeleafViewResolver;
+    public ThymeleafViewResolver thymeleafViewResolver() {
+        ThymeleafViewResolver tvr = new ThymeleafViewResolver();
+        SpringTemplateEngine ste = new SpringTemplateEngine();
+        ServletContextTemplateResolver sctr = new ServletContextTemplateResolver();
+        sctr.setPrefix("/WEB-INF/views/");
+        sctr.setSuffix(".html");
+        sctr.setCacheable(false);
+        sctr.setCharacterEncoding("UTF-8");
+        sctr.setTemplateMode("HTML5");
+        ste.setTemplateResolver(sctr);
+        tvr.setTemplateEngine(ste);
+        tvr.setCharacterEncoding("UTF-8");
+        return tvr;
     }
 
     /**
@@ -67,8 +58,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter jsonMessageConverter = new MappingJackson2HttpMessageConverter();
         List<MediaType> mediaTypes = Arrays.asList(
-                new MediaType("text", "plain"),
-                new MediaType("application", "json"));
+                new MediaType("text", "plain", Charset.forName("UTF-8")),
+                new MediaType("application", "json", Charset.forName("UTF-8")));
         jsonMessageConverter.setSupportedMediaTypes(mediaTypes);
         converters.add(jsonMessageConverter);
     }
