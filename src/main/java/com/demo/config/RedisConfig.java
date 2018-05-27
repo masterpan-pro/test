@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-@PropertySource({"classpath:redis.properties"})
+@PropertySource("classpath:redis.properties")
 public class RedisConfig {
 
     @Value("${redis.pool.minIdle}")
