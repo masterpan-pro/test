@@ -1,5 +1,7 @@
 package com.demo;
 
+import com.demo.config.MybatisConfig;
+import com.demo.config.RedisConfig;
 import com.demo.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -19,7 +21,11 @@ public class WebAppInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext container) {
         // Create the dispatcher servlet's Spring application context
         AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-        dispatcherContext.register(WebConfig.class);
+        dispatcherContext.register(
+                WebConfig.class,
+                MybatisConfig.class,
+                RedisConfig.class
+        );
 
         // Register and map the dispatcher servlet
         ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));

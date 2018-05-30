@@ -24,7 +24,6 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-@Import({MybatisConfig.class, RedisConfig.class})
 @ComponentScan(
         basePackages = "com.demo.controller",
         useDefaultFilters = false,
