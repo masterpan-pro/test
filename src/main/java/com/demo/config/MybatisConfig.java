@@ -11,9 +11,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -35,7 +38,7 @@ public class MybatisConfig {
     public DataSource dataSource() {
         HikariDataSource ds = new HikariDataSource();
         ds.setMaximumPoolSize(100);
-        ds.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+        ds.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
         ds.addDataSourceProperty("url", url);
         ds.addDataSourceProperty("user", username);
         ds.addDataSourceProperty("password", password);
@@ -44,6 +47,23 @@ public class MybatisConfig {
         ds.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
         ds.addDataSourceProperty("useServerPrepStmts", true);
         return ds;
+    }
+
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
+        final DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(dataSource);
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript();
+        populator.addScript(dataScript);
+        initializer.setDatabasePopulator(populator);
+        return initializer;
+    }
+
+
+    @Bean(initMethod="start",destroyMethod="stop")
+    public org.h2.tools.Server h2WebConsonleServer () throws SQLException {
+        return org.h2.tools.Server.createWebServer("-web","-webAllowOthers","-webDaemon","-webPort", "8082");
     }
 
     @Bean
