@@ -39,7 +39,6 @@ public class MybatisConfig {
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         HikariDataSource ds = new HikariDataSource();
-        ds.setMaximumPoolSize(100);
         ds.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
         ds.addDataSourceProperty("url", url);
         ds.addDataSourceProperty("user", username);
@@ -51,12 +50,13 @@ public class MybatisConfig {
     public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(new ClassPathResource("h2-init/schema.sql"));
-        populator.addScript(new ClassPathResource("h2-init/import-data.sql"));
+//        populator.addScript(new ClassPathResource("h2-init/import-data.sql"));
         DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
         initializer.setDatabasePopulator(populator);
         return initializer;
     }
+
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     public Server h2WebConsonleServer() throws SQLException {
