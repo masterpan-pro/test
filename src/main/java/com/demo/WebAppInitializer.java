@@ -1,5 +1,6 @@
 package com.demo;
 
+import com.demo.config.AopConfig;
 import com.demo.config.MybatisConfig;
 import com.demo.config.RedisConfig;
 import com.demo.config.WebConfig;
@@ -24,7 +25,8 @@ public class WebAppInitializer implements WebApplicationInitializer {
         dispatcherContext.register(
                 WebConfig.class,
                 MybatisConfig.class,
-                RedisConfig.class
+                RedisConfig.class,
+                AopConfig.class
         );
 
         // Register and map the dispatcher servlet

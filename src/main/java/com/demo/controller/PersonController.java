@@ -1,6 +1,9 @@
 package com.demo.controller;
 
+import com.demo.annotation.OperationLog;
+import com.demo.entity.Log;
 import com.demo.entity.Person;
+import com.demo.service.LogService;
 import com.demo.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+    @Autowired
+    private LogService logService;
+
     @RequestMapping("index")
     public ModelAndView index(ModelAndView modelAndView) {
         Person person = new Person(null, "admin", 24, "changsha", new Timestamp(System.currentTimeMillis()), "beizhu", new BigDecimal(12000.23));
@@ -33,10 +39,17 @@ public class PersonController {
         return modelAndView;
     }
 
+    @OperationLog(description = "查询Person数据")
     @ResponseBody
     @RequestMapping("json")
     public List<Person> index() {
         return personService.find();
+    }
+
+    @ResponseBody
+    @RequestMapping("log")
+    public List<Log> log() {
+        return logService.find();
     }
 
     @ResponseBody
