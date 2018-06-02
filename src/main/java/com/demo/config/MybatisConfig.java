@@ -1,5 +1,6 @@
 package com.demo.config;
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.h2.tools.Server;
@@ -38,19 +39,25 @@ public class MybatisConfig {
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-        HikariDataSource ds = new HikariDataSource();
-        ds.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
-        ds.addDataSourceProperty("url", url);
-        ds.addDataSourceProperty("user", username);
-        ds.addDataSourceProperty("password", password);
-        return ds;
+        Properties properties = new Properties();
+        properties.setProperty("url", url);
+        properties.setProperty("user", username);
+        properties.setProperty("password", password);
+
+        HikariConfig config = new HikariConfig();
+        config.setPoolName("HikariCP");
+        config.setConnectionTestQuery("SELECT 1");
+        config.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
+        config.setDataSourceProperties(properties);
+
+        return new HikariDataSource(config);
     }
 
     @Bean
     public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(new ClassPathResource("h2-init/schema.sql"));
-//        populator.addScript(new ClassPathResource("h2-init/import-data.sql"));
+        populator.addScript(new ClassPathResource("h2-init/import-data.sql"));
         DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
         initializer.setDatabasePopulator(populator);
