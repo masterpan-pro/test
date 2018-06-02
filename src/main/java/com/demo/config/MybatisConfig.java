@@ -2,6 +2,7 @@ package com.demo.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.h2.tools.Server;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
@@ -16,8 +18,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
@@ -42,28 +44,23 @@ public class MybatisConfig {
         ds.addDataSourceProperty("url", url);
         ds.addDataSourceProperty("user", username);
         ds.addDataSourceProperty("password", password);
-        ds.addDataSourceProperty("cachePrepStmts", true);
-        ds.addDataSourceProperty("prepStmtCacheSize", 250);
-        ds.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
-        ds.addDataSourceProperty("useServerPrepStmts", true);
         return ds;
     }
 
     @Bean
-    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
-        final DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
+    public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript();
-        populator.addScript(dataScript);
+        populator.addScript(new ClassPathResource("h2-init/schema.sql"));
+        populator.addScript(new ClassPathResource("h2-init/import-data.sql"));
+        DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(dataSource);
         initializer.setDatabasePopulator(populator);
         return initializer;
     }
 
-
-    @Bean(initMethod="start",destroyMethod="stop")
-    public org.h2.tools.Server h2WebConsonleServer () throws SQLException {
-        return org.h2.tools.Server.createWebServer("-web","-webAllowOthers","-webDaemon","-webPort", "8082");
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public Server h2WebConsonleServer() throws SQLException {
+        return Server.createWebServer("-web", "-webAllowOthers", "-webDaemon", "-webPort", "8082");
     }
 
     @Bean
