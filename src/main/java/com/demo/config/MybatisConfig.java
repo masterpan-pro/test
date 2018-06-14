@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -21,6 +22,7 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
@@ -78,8 +80,13 @@ public class MybatisConfig {
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/*Mapper.xml"));
         SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
         // 开启缓存
-        sqlSessionFactory.getConfiguration().setCacheEnabled(true);
+        Objects.requireNonNull(sqlSessionFactory).getConfiguration().setCacheEnabled(true);
         return sqlSessionFactory;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 
     @Bean(name = "txManager")
