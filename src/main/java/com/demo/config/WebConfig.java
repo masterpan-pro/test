@@ -1,5 +1,6 @@
 package com.demo.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -14,6 +15,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,7 +62,14 @@ public class WebConfig implements WebMvcConfigurer {
         List<MediaType> mediaTypes = Arrays.asList(
                 new MediaType("text", "plain", Charset.forName("UTF-8")),
                 new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
         jsonMessageConverter.setSupportedMediaTypes(mediaTypes);
+        jsonMessageConverter.setObjectMapper(objectMapper);
+        jsonMessageConverter.setDefaultCharset(Charset.forName("UTF-8"));
+
         converters.add(jsonMessageConverter);
     }
 

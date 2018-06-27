@@ -1,6 +1,5 @@
 package com.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,7 +14,6 @@ public class Person implements Serializable {
     private String name;
     private Integer age;
     private String address;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp birthday;
     private String remark;
     private BigDecimal money;
