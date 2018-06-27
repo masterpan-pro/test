@@ -11,7 +11,7 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 @PropertySource("classpath:redis.properties")
 @ComponentScan(
-        basePackages = "com.demo.config",
+        basePackages = "com.demo.util",
         useDefaultFilters = false,
         includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Component.class))
 public class RedisConfig {

@@ -1,6 +1,6 @@
 package com.demo.service.impl;
 
-import com.demo.config.RedisLock;
+import com.demo.util.RedisLock;
 import com.demo.service.SeckillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
