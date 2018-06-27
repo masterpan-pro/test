@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 /**
  * Redis分布式锁
  * https://blog.csdn.net/qq_26525215/article/details/79182687
+ * http://wudashan.com/2017/10/23/Redis-Distributed-Lock-Implement/
  * @author MasterPan
  */
 @Slf4j
