@@ -5,6 +5,7 @@ import com.demo.entity.Log;
 import com.demo.entity.Person;
 import com.demo.service.LogService;
 import com.demo.service.PersonService;
+import com.demo.service.SeckillService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ public class PersonController {
 
     @Autowired
     private LogService logService;
+
+    @Autowired
+    private SeckillService seckillService;
 
     @RequestMapping("index")
     public ModelAndView index(ModelAndView modelAndView) {
@@ -78,6 +82,19 @@ public class PersonController {
     public List<Person> delete() {
         personService.deleteAll();
         return personService.find();
+    }
+
+    /**
+     * 模拟秒杀(测试Redis分布式锁)
+     */
+    @ResponseBody
+    @RequestMapping("sec-kill")
+    public String secKillProduct() {
+        seckillService.orderProductMocckDiffUser("123456");
+
+        String productInfo = seckillService.querySecKillProductInfo("123456");
+        log.info("Product Info: {}", productInfo);
+        return productInfo;
     }
 
 }

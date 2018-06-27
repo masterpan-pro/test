@@ -2,14 +2,18 @@ package com.demo.config;
 
 import com.demo.util.RedisCacheTransfer;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 @PropertySource("classpath:redis.properties")
+@ComponentScan(
+        basePackages = "com.demo.config",
+        useDefaultFilters = false,
+        includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Component.class))
 public class RedisConfig {
 
     @Value("${redis.pool.minIdle}")
@@ -50,6 +54,11 @@ public class RedisConfig {
         jedisConnectionFactory.setUsePool(true);
         jedisConnectionFactory.setPoolConfig(poolConfig);
         return jedisConnectionFactory;
+    }
+
+    @Bean
+    public StringRedisTemplate stringRedisTemplate(JedisConnectionFactory connectionFactory) {
+        return new StringRedisTemplate(connectionFactory);
     }
 
     @Bean
