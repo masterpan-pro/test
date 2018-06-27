@@ -90,11 +90,7 @@ public class PersonController {
     @ResponseBody
     @RequestMapping("sec-kill")
     public String secKillProduct() {
-        seckillService.orderProductMocckDiffUser("123456");
-
-        String productInfo = seckillService.querySecKillProductInfo("123456");
-        log.info("Product Info: {}", productInfo);
-        return productInfo;
+        return seckillService.orderProductMocckDiffUser("123456");
     }
 
 }
