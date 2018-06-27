@@ -8,10 +8,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,11 +24,14 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
-@MapperScan("com.demo.dao")
+@MapperScan(basePackages = MybatisConfig.BASE_MAPPER_PACKAGE,
+        sqlSessionFactoryRef = "sqlSessionFactory", sqlSessionTemplateRef = "sqlSessionTemplate")
 @PropertySource("classpath:jdbc.properties")
 @ComponentScan("com.demo.service")
 @EnableTransactionManagement
 public class MybatisConfig {
+
+    static final String BASE_MAPPER_PACKAGE = "com.demo.dao";
 
     @Value("${jdbc.url}")
     private String url;
@@ -40,6 +40,7 @@ public class MybatisConfig {
     @Value("${jdbc.password}")
     private String password;
 
+    @Primary
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         Properties properties = new Properties();
@@ -61,6 +62,7 @@ public class MybatisConfig {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(new ClassPathResource("h2-init/schema.sql"));
         populator.addScript(new ClassPathResource("h2-init/import-data.sql"));
+
         DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
         initializer.setDatabasePopulator(populator);
