@@ -24,5 +24,6 @@ public class TestDemo extends BaseJunitTest {
         mapper.find().forEach(System.out::println);
         System.out.println("----------[Mybatis一级缓存]----------");
         mapper.find().forEach(System.out::println);
+        sqlSession.close();
     }
 }
