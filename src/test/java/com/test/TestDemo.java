@@ -19,11 +19,11 @@ public class TestDemo extends BaseJunitTest {
 
     @Test
     public void test() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        mapper.find().forEach(System.out::println);
-        System.out.println("----------[Mybatis一级缓存]----------");
-        mapper.find().forEach(System.out::println);
-        sqlSession.close();
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+            mapper.find().forEach(System.out::println);
+            System.out.println("----------[Mybatis一级缓存]----------");
+            mapper.find().forEach(System.out::println);
+        }
     }
 }
